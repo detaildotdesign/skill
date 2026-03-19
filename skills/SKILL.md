@@ -1,5 +1,5 @@
 ---
-name: detail-design-eng
+name: interface-details
 description: This skill encodes the design engineering philosophy of making software feel crafted — through spacing, layout, color, typography, interaction patterns, and the invisible decisions that separate polished products from merely functional ones.
 ---
 
