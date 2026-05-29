@@ -10,6 +10,12 @@ npx skills add detaildotdesign/skill
 
 You can also browse the skill on [skills.sh](https://skills.sh/detaildotdesign/skill/interface-details).
 
+To update:
+
+```bash
+npx skills update
+```
+
 ## Usage
 
 The agent should use it when you ask about "adding details" or "make the interface feels better".
