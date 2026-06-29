@@ -31,21 +31,12 @@ Persistent gridlines and row highlights become noise. Show the guide on table ho
 .table.is-clicking .row:hover { background: transparent; }
 ```
 
-### 5. Tint the surrounding surface to the active media
-When a gallery or carousel scrolls, sample the visible image and bleed its dominant color into the page background. The chrome feels adaptive and ambient, framing whatever media is currently in view instead of sitting on flat neutral.
-```css
-.stage {
-  background: var(--active-media-tint);
-  transition: background 400ms ease;
-}
-```
-
-### 6. Style the video player, not just its toolbar
+### 5. Style the video player, not just its toolbar
 Owning the player means more than recoloring the default controls. Blur the poster frame until the stream loads so there's no hard pop-in, add speed control, and theme the toolbar to match the product surface.
 ```css
 video[data-loading] { filter: blur(12px); transition: filter 200ms; }
 .player__rate { /* 0.5x / 1x / 1.5x / 2x toggle */ }
 ```
 
-### 7. Give generated documents real typography
+### 6. Give generated documents real typography
 Invoices, receipts, and exported PDFs default to boring system layouts. Treat them as a branded surface: deliberate type scale, aligned columns, and spacing that matches the product, so the document reads as crafted rather than auto-generated.

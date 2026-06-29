@@ -1,6 +1,6 @@
 # Button & Control Details
 
-Hit areas, cursor semantics, click guards, keyboard shortcuts, icon alignment, and glassy surfaces for buttons and interactive controls.
+Hit areas, cursor semantics, click guards, and keyboard shortcuts for buttons and interactive controls.
 
 **Skip when:** The element isn't actually interactive (static labels, decorative chips) — hover cursors and shortcuts there mislead. Single-key shortcuts and contextual cursors only earn their keep in dense, frequently-used tools; on a marketing page or settings form they're noise.
 
