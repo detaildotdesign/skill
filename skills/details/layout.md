@@ -1,33 +1,51 @@
-# Layout & Spacing Details
+# Layout Details
 
-Rules for border radius, layout shifts, optical alignment, and visual spacing.
+Border radius math, optical alignment, media surfaces, and adaptive document chrome.
+
+**Skip when:** Content is text-only, single-column, or rendered once and never re-laid-out. Reserving space and choreographing these surfaces is wasted effort on a static page — these techniques pay off when elements nest, carry visual weight, or wrap media.
 
 ## Rules
 
-### Nested border radius calculation
-When nesting rounded elements, calculate the inner border radius as the outer radius minus the padding between them. Mismatched radii create an optically uneven gap that looks unpolished.
-
+### 1. Match nested border radius to padding
+Concentric corners must stay parallel. Set the inner radius to the outer radius minus the gap between them, or the curves drift and the gap looks optically uneven. This won't fit every layout, but reach for it whenever one rounded box sits inside another.
+```css
+.outer { border-radius: 16px; padding: 4px; }
+.inner { border-radius: 12px; } /* 16 - 4 */
 ```
-inner-radius = outer-radius - padding
-```
 
-### Blur test for optical alignment
-Blur your layout at design time to check whether elements are optically centered rather than mathematically centered. Human perception of alignment differs from pixel-perfect math — blurring reveals optical imbalances.
+### 2. Blur-test optical alignment
+Mathematically centered isn't always perceptually centered — icons with visual weight on one side, triangles, and glyphs read as off-center. Blur or squint at the layout (watch a recording at 0.5x) and nudge until it sits right; misalignments that survive the blur are real.
 
-### Inset shadow for image borders
-Use an inset `box-shadow` with a semi-transparent color instead of a CSS border for image edges. An inset ring blends with the image content and avoids the harsh line a border creates.
-
+### 3. Use an inset ring instead of a border on images
+A solid `border` adds a hard line that competes with the image and shifts layout by its width. A semi-transparent inset `box-shadow` sits inside the bounds, blends with light or dark content, and gives the edge a softer, more natural boundary.
 ```css
 img {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 ```
 
-### Reserve space for weight changes
-Use an invisible `::after` pseudo-element with bold text to pre-reserve the bold width, so hover/active font weight changes do not cause layout shifts.
+### 4. Reveal alignment guides only on hover, hide them on click
+Persistent gridlines and row highlights become noise. Show the guide on table hover so the eye can trace a value, then temporarily fade it out on click so the active selection highlight stands alone.
+```css
+.row:hover { background: var(--guide-tint); }
+.table.is-clicking .row:hover { background: transparent; }
+```
 
-### Animate layout expansions
-When media controls or panels expand, smoothly slide surrounding elements rather than letting content jump. Choreographed layout transitions maintain spatial relationships.
+### 5. Tint the surrounding surface to the active media
+When a gallery or carousel scrolls, sample the visible image and bleed its dominant color into the page background. The chrome feels adaptive and ambient, framing whatever media is currently in view instead of sitting on flat neutral.
+```css
+.stage {
+  background: var(--active-media-tint);
+  transition: background 400ms ease;
+}
+```
 
-### Contextual visual guidelines
-Show visual guidelines (alignment lines, row highlights) on table hover, and fade them when clicking to avoid visual clutter. Temporary guidelines help users read data without adding permanent visual noise.
+### 6. Style the video player, not just its toolbar
+Owning the player means more than recoloring the default controls. Blur the poster frame until the stream loads so there's no hard pop-in, add speed control, and theme the toolbar to match the product surface.
+```css
+video[data-loading] { filter: blur(12px); transition: filter 200ms; }
+.player__rate { /* 0.5x / 1x / 1.5x / 2x toggle */ }
+```
+
+### 7. Give generated documents real typography
+Invoices, receipts, and exported PDFs default to boring system layouts. Treat them as a branded surface: deliberate type scale, aligned columns, and spacing that matches the product, so the document reads as crafted rather than auto-generated.

@@ -15,17 +15,20 @@ Install: `npx skills add detaildotdesign/skill`
 
 ## How the Skill System Works
 
-`SKILL.md` is the entry point. It directs the AI assistant to load specific files from `details/` based on what the user is working on (e.g., load `details/form.md` when working on forms). Each detail file is self-contained and follows a consistent format: numbered rules, each with a title, explanation, and often a code example.
+`SKILL.md` is the entry point. It (1) resolves the request into an operating mode — **Build**, **Polish**, or **Review** — (2) routes the assistant to load only the matching file(s) from `details/`, (3) runs each candidate detail through a **decision gate** (serve the user, frequency of exposure, respect the user, consistency), and (4) for Review mode defines a fixed `file:line` + rule-ID output format. Each detail file is self-contained and follows a consistent format.
 
 ## Content Conventions
 
--   Each rule in a detail file is a `###`-level heading with a number prefix (e.g., `### 1. Title`)
+-   Each chapter file opens with a one-line scope sentence and a `**Skip when:**` note (when these details become over-engineering for that category)
+-   Each rule is a `###`-level heading with a number prefix (e.g., `### 1. Title`). The citation ID is `<category>-<N>` — the chapter filename plus the rule number (e.g., `motion-12`, `form-3`)
+-   Rule numbering is sequential within each file and **stable**: append new rules at the end; do not reorder
+-   Each rule body is **observable/checkable** (not subjective) and carries a short code example where one clarifies the technique (HTML/CSS/JS/React); conceptual rules may stay prose-only
 -   Rules should be **reusable techniques** applicable beyond a single product, **too subtle to notice individually**, or **easter eggs/moments of delight**
 -   Rules should NOT be core features, onboarding/hero/card design, or pure decoration
 -   The five core principles: craft over decoration, ambient over obvious, physics over magic, intent over input, consistency over novelty
 
 ## When Editing Content
 
--   Keep rules actionable and include code examples where possible (HTML/CSS/JS/React)
--   New detail categories need a corresponding entry in the "How to use this skill" section of `SKILL.md`
--   Rule numbering is sequential within each file
+-   Keep rules actionable; include a short code example where one makes the rule actionable
+-   New detail categories need a row in the **routing table** of `SKILL.md` and must follow the chapter template (scope line, `Skip when`, numbered rules)
+-   Rule numbering is sequential and stable within each file
